@@ -59,19 +59,30 @@ Guia completo de deploy em [DEPLOY.md](./DEPLOY.md). Suporta:
 
 | Plataforma | Tipo | Custo |
 |------------|------|-------|
+| [Vercel](https://vercel.com) | Serverless | **Gratuito** ⭐ |
 | [Render](https://render.com) | PaaS | Gratuito |
 | [Railway](https://railway.app) | PaaS | Gratuito (crédito) |
 | [Fly.io](https://fly.io) | Edge PaaS | Gratuito (crédito) |
 | [Heroku](https://heroku.com) | PaaS | Credit card required |
 | Docker / VPS | Container | Variável |
 
-### Deploy rápido no Render
+### Deploy rápido no Vercel (recomendado)
 
 ```bash
-# 1. Faça login no Render e conecte seu GitHub
-# 2. Crie um novo Web Service apontando para este repositório
-# 3. Use as configurações do render.yaml
+# 1. Acesse vercel.com e faça login com GitHub
+# 2. Importe o repositório Minha-Biblia-Sagrada-
+# 3. Clique em Deploy — pronto!
 ```
+
+Ou pelo CLI:
+
+```bash
+npm i -g vercel
+vercel login
+vercel
+```
+
+A API estará em `https://minha-biblia-sagrada-.vercel.app`
 
 ### Deploy com Docker
 
@@ -229,7 +240,10 @@ O projeto usa SQLite com FTS5 (Full-Text Search) para armazenamento. O banco de 
 ├── data/                     # Banco de dados SQLite
 ├── .github/workflows/
 │   └── ci.yml                # CI/CD com GitHub Actions
-├── .render.yaml              # Configuração do Render
+├── api/
+│   └── index.js              # Handler serverless do Vercel
+├── vercel.json               # Configuração do Vercel
+├── render.yaml               # Configuração do Render
 ├── fly.toml                  # Configuração do Fly.io
 ├── Procfile                  # Configuração do Heroku
 ├── Dockerfile                # Multi-stage build

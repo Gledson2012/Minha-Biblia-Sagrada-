@@ -196,14 +196,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Initialize database and start server
-initDb();
+// Initialize database and start server (apenas quando roda localmente, não no Vercel)
+if (require.main === module) {
+  initDb();
+  app.listen(PORT, () => {
+    logger.info({ port: PORT }, '📖 Bíblia Sagrada API rodando');
+    logger.info({ docs: `http://localhost:${PORT}/docs` }, '📚 Documentação Swagger');
+    logger.info({ health: `http://localhost:${PORT}${API_PREFIX}/health` }, '🏥 Health check');
+  });
+}
 
-app.listen(PORT, () => {
-  logger.info({ port: PORT }, '📖 Bíblia Sagrada API rodando');
-  logger.info({ docs: `http://localhost:${PORT}/docs` }, '📚 Documentação Swagger');
-  logger.info({ health: `http://localhost:${PORT}${API_PREFIX}/health` }, '🏥 Health check');
-});
+// No Vercel, inicializa o banco a cada cold start
+if (process.env.VERCEL) {
+  initDb();
+}
 
 // Graceful shutdown
 process.on('SIGTERM', () => {

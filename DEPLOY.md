@@ -4,7 +4,60 @@ Escolha uma das opções abaixo para colocar a API em produção.
 
 ---
 
-## Opção 1 — Render (gratuito)
+## Opção 1 — Vercel (recomendado — gratuito)
+
+**Vercel** é a opção mais rápida: deploy automático a partir do GitHub, sem cartão de crédito, com SSL gratuito e CDN global.
+
+### Deploy pelo navegador (mais fácil)
+
+1. Acesse **[vercel.com](https://vercel.com)** e faça login com sua conta GitHub
+2. Clique em **Add New...** → **Project**
+3. Clique em **Import** no repositório `Minha-Biblia-Sagrada-`
+4. Deixe as configurações padrão (Vercel detecta automaticamente)
+5. Clique em **Deploy**
+
+Pronto! A API estará disponível em:
+**https://minha-biblia-sagrada-.vercel.app**
+
+### Deploy com CLI
+
+```bash
+# Instale o CLI do Vercel
+npm i -g vercel
+
+# Faça login
+vercel login
+
+# Deploy
+cd "/home/bugshell/Meu Github/Biblia Sagrada"
+vercel
+```
+
+### Como funciona
+
+- O arquivo `vercel.json` configura o deploy automaticamente
+- O handler `api/index.js` exporta o app Express como função serverless
+- O banco SQLite é recriado a cada cold start (os dados são estáticos, então funciona perfeitamente)
+- **Cold start**: A primeira requisição após inatividade pode levar ~2-3 segundos
+
+### Teste após o deploy
+
+```bash
+# Health check
+curl https://minha-biblia-sagrada-.vercel.app/api/v1/health
+
+# João 3:16
+curl https://minha-biblia-sagrada-.vercel.app/api/v1/reference/Joao/3/16
+
+# Documentação Swagger
+open https://minha-biblia-sagrada-.vercel.app/docs
+```
+
+> **Nota**: O plano gratuito tem limite de 100GB de banda/mês e funções serverless com timeout de 10s. Para uma API bíblica, isso é mais do que suficiente.
+
+---
+
+## Opção 2 — Render (gratuito)
 
 Render é a opção mais simples: deploy automático a partir do GitHub com persistência de dados.
 
