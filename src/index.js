@@ -206,10 +206,8 @@ if (require.main === module) {
   });
 }
 
-// No Vercel, inicializa o banco a cada cold start
-if (process.env.VERCEL) {
-  initDb();
-}
+// No Vercel, o banco é inicializado pelo api/index.js (handler serverless)
+// Não inicializar aqui para evitar conflitos
 
 // Graceful shutdown
 process.on('SIGTERM', () => {

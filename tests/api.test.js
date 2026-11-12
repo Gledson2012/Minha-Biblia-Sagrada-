@@ -25,6 +25,10 @@ beforeAll(async () => {
   delete require.cache[require.resolve('../src/middleware')];
   delete require.cache[require.resolve('../src/index')];
 
+  // Inicializa o banco de dados para os testes
+  const { initDb } = require('../src/database/init');
+  initDb();
+
   app = require('../src/index');
 });
 

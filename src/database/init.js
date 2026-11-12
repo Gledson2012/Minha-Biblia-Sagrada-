@@ -1,7 +1,20 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = process.env.DB_PATH || path.join(__dirname, '../../data/bible.db');
+// No Vercel, usar /tmp (único diretório gravável)
+// Localmente, usar ./data/bible.db
+let dbPath;
+if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+  dbPath = '/tmp/bible.db';
+} else {
+  dbPath = process.env.DB_PATH || path.join(__dirname, '../../data/bible.db');
+  // Garante que o diretório existe
+  const dbDir = path.dirname(dbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
+}
 
 let db;
 
