@@ -1,0 +1,10 @@
+node_modules/
+data/bible.db
+data/bible.db-wal
+data/bible.db-shm
+.env
+.DS_Store
+*.log
+tests/test.db
+tests/test.db-wal
+tests/test.db-shm

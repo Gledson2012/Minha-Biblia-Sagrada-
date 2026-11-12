@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: biblia-sagrada-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: LOG_LEVEL
+        value: info
+      - key: CACHE_TTL
+        value: 300
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: RATE_LIMIT_MAX
+        value: 100
+    disk:
+      name: bible-data
+      mountPath: /app/data
+      sizeGB: 1
